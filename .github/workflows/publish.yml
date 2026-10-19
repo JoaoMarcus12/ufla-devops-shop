@@ -28,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/JoaoMarcus12/ufla-shop:1.0.0
+          tags: ghcr.io/joaomarcus12/ufla-shop:1.0.0
