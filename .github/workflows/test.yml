@@ -1,7 +1,10 @@
 name: Test Persistence
 
 on:
-  workflow_dispatch: # Permite rodar manualmente
+  push:
+    branches:
+      - atividade-05
+  workflow_dispatch:
 
 jobs:
   test:
