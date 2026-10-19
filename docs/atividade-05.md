@@ -4,7 +4,11 @@
 Abaixo a saída do comando `docker compose ps` demonstrando todos os serviços em estado `healthy`:
 
 ```text
-# [INSIRA AQUI A SAÍDA DO COMANDO: docker compose ps]
+NAME                       IMAGE                                  COMMAND                  SERVICE   CREATED         STATUS                   PORTS
+ufla-devops-shop-api-1     ghcr.io/joaomarcus12/ufla-shop:1.0.0   "python -m app"          api       6 seconds ago   Up Less than a second    8000/tcp
+ufla-devops-shop-banco-1   postgres:16-alpine                     "docker-entrypoint.s…"   banco     9 seconds ago   Up 6 seconds (healthy)   5432/tcp
+ufla-devops-shop-cache-1   redis:7-alpine                         "docker-entrypoint.s…"   cache     9 seconds ago   Up 6 seconds (healthy)   6379/tcp
+ufla-devops-shop-nginx-1   nginx:1.27-alpine                      "/docker-entrypoint.…"   nginx     6 seconds ago   Up Less than a second    0.0.0.0:80->80/tcp, [::]:80->80/tcp
 ```
 
 ## 2. Teste de Persistência de Dados
@@ -13,8 +17,8 @@ Roteiro de teste para validar o volume nomeado do PostgreSQL:
 - **Passo 1: Cadastro de Produto**
   `curl -s -X POST http://localhost/api/produtos -H 'Content-Type: application/json' -d '{"nome":"Prova de persistencia","preco":9.9,"estoque":1}'`
   **Resultado:**
-  ```text
-  # [INSIRA AQUI A RESPOSTA DO POST]
+  ```json
+  {"id": 1, "nome": "Prova de persistencia", "preco": 9.9, "estoque": 1}
   ```
 
 - **Passo 2: Derrubada da Stack**
@@ -26,8 +30,8 @@ Roteiro de teste para validar o volume nomeado do PostgreSQL:
 - **Passo 4: Busca do Produto**
   `curl -s 'http://localhost/api/busca?q=persistencia'`
   **Resultado:**
-  ```text
-  # [INSIRA AQUI A RESPOSTA DA BUSCA - DEVE RETORNAR O PRODUTO]
+  ```json
+  {"total": 1, "produtos": [{"id": 1, "nome": "Prova de persistencia", "preco": 9.9, "estoque": 1}]}
   ```
 
 ## 3. Imagem no GHCR
